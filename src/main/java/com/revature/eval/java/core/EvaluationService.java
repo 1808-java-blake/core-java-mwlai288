@@ -15,9 +15,9 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String reverse(String string) {
-	
+
 		char[] reversed = new char[string.length()];
-		for (int i = reversed.length - 1, j=0; i >= 0; i--, j++) {
+		for (int i = reversed.length - 1, j = 0; i >= 0; i--, j++) {
 			reversed[j] = string.charAt(i);
 		}
 		return new String(reversed);
@@ -32,20 +32,20 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		String newPhrase = phrase.replaceAll("\\p{Punct}", "");  
+		String newPhrase = phrase.replaceAll("\\p{Punct}", "");
 		System.out.println(newPhrase);
 		String[] acro = newPhrase.split(" ");
 		System.out.println(Arrays.toString(acro));
 		String firstLetter = "";
-		for(int i=0; i<acro.length; i++) {
+		for (int i = 0; i < acro.length; i++) {
 			firstLetter += Character.toUpperCase(acro[i].charAt(0));
 
-			//		Function to remove hyphen.
-			//		if(acro[i].contains("-")) {
-			//			 
-			//			}
+			// Function to remove hyphen.
+			// if(acro[i].contains("-")) {
+			//
+			// }
 		}
-		
+
 		return firstLetter;
 	}
 
@@ -140,8 +140,27 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		String upperCase = string.toUpperCase();
+		char[] letters = upperCase.toCharArray();
+		int score = 0;
+		for (char letter : letters) {
+			if (letter == 'D' || letter == 'G')
+				score += 2;
+			else if (letter == 'B' || letter == 'C' || letter == 'M' || letter == 'P')
+				score += 3;
+			else if (letter == 'F' || letter == 'H' || letter == 'V' || letter == 'W' || letter == 'Y')
+				score += 4;
+			else if (letter == 'K')
+				score += 5;
+			else if (letter == 'J' || letter == 'X')
+				score += 8;
+			else if (letter == 'Q' || letter == 'Z')
+				score += 10;
+			else
+				score += 1;
+		}
+
+		return score;
 	}
 
 	/**
@@ -176,8 +195,11 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String cleanNumber = string.replaceAll("[^0-9]", "");
+		if(cleanNumber.length() != 10) {
+			throw new IllegalArgumentException("Invalid Phone Number");
+		}
+		return cleanNumber;
 	}
 
 	/**
@@ -562,7 +584,7 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
-		
+
 		return 0;
 	}
 
