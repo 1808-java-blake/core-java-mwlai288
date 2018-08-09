@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String reverse(String string) {
+	
 		char[] reversed = new char[string.length()];
 		for (int i = reversed.length - 1, j=0; i >= 0; i--, j++) {
 			reversed[j] = string.charAt(i);
@@ -30,8 +32,21 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String newPhrase = phrase.replaceAll("\\p{Punct}", "");  
+		System.out.println(newPhrase);
+		String[] acro = newPhrase.split(" ");
+		System.out.println(Arrays.toString(acro));
+		String firstLetter = "";
+		for(int i=0; i<acro.length; i++) {
+			firstLetter += Character.toUpperCase(acro[i].charAt(0));
+
+			//		Function to remove hyphen.
+			//		if(acro[i].contains("-")) {
+			//			 
+			//			}
+		}
+		
+		return firstLetter;
 	}
 
 	/**
@@ -85,16 +100,25 @@ public class EvaluationService {
 
 		public boolean isEquilateral() {
 			// TODO Write an implementation for this method declaration
+			if (sideOne == sideTwo && sideOne == sideThree) {
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
+			if (sideOne == sideTwo || sideOne == sideThree || sideTwo == sideThree) {
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isScalene() {
 			// TODO Write an implementation for this method declaration
+			if (sideOne != sideTwo && sideOne != sideThree && sideTwo != sideThree) {
+				return true;
+			}
 			return false;
 		}
 
@@ -538,6 +562,7 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
+		
 		return 0;
 	}
 
