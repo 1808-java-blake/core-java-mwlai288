@@ -1,7 +1,12 @@
 package com.revature.eval.java.core;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.Temporal;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,9 +38,9 @@ public class EvaluationService {
 	 */
 	public String acronym(String phrase) {
 		String newPhrase = phrase.replaceAll("\\p{Punct}", "");
-		System.out.println(newPhrase);
+
 		String[] acro = newPhrase.split(" ");
-		System.out.println(Arrays.toString(acro));
+
 		String firstLetter = "";
 		for (int i = 0; i < acro.length; i++) {
 			firstLetter += Character.toUpperCase(acro[i].charAt(0));
@@ -99,7 +104,7 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
+
 			if (sideOne == sideTwo && sideOne == sideThree) {
 				return true;
 			}
@@ -107,7 +112,7 @@ public class EvaluationService {
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
+
 			if (sideOne == sideTwo || sideOne == sideThree || sideTwo == sideThree) {
 				return true;
 			}
@@ -115,7 +120,7 @@ public class EvaluationService {
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
+
 			if (sideOne != sideTwo && sideOne != sideThree && sideTwo != sideThree) {
 				return true;
 			}
@@ -196,7 +201,7 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		String cleanNumber = string.replaceAll("[^0-9]", "");
-		if(cleanNumber.length() != 10) {
+		if (cleanNumber.length() != 10) {
 			throw new IllegalArgumentException("Invalid Phone Number");
 		}
 		return cleanNumber;
@@ -211,9 +216,32 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
+
+	/**
+	 * 6. Given a phrase, count the occurrences of each word in that phrase.
+	 * 
+	 * For example for the input "olly olly in come free" olly: 2 in: 1 come: 1
+	 * free: 1
+	 * 
+	 * @param string
+	 * @return
+	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		Map<String, Integer> words = new HashMap<String, Integer>();
+		string = string.replaceAll(",", " ").replaceAll("\n", "");
+//		System.out.println(string);
+		String[] word = string.split("\\s+");
+//		System.out.println(Arrays.toString(words));
+		for (int i = 0; i < word.length; i++) {
+			if (words.get(word[i]) == null) {
+				words.put(word[i], 1);
+			} else {
+				int count = words.get(word[i]) + 1;
+				words.put(word[i], count);
+//				System.out.println(words);
+			}
+		}
+		return words;
 	}
 
 	/**
@@ -292,8 +320,20 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String s = string;
+		s = s.toLowerCase();
+		String pigWord = "";
+
+		for (int i = 0; i < s.length(); i++) {
+			if (s.charAt(i) == 'a' || s.charAt(i) == 'e' || s.charAt(i) == 'i' || s.charAt(i) == 'o'
+					|| s.charAt(i) == 'u') {
+				s = s.substring(i, s.length());
+				s = s + pigWord + "ay";
+			} else {
+				pigWord = s.substring(0, i + 1);
+			}
+		}
+		return s;
 	}
 
 	/**
@@ -480,6 +520,17 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		// TODO Write an implementation for this method declaration
+		System.out.println(string);
+		String[] s = string.split("");
+		System.out.println(Arrays.toString(s));
+		String letters = "abcdefghijklmnopqrstuvwxyz";
+		for (int i = 0; i <= s.length; i++) {
+			if (letters.contains(String.valueOf(string.charAt(i)))) {
+				letters.equals(s);
+			} else if (!letters.equalsIgnoreCase(String.valueOf(string.charAt(i))));
+			return true;
+
+		}
 		return false;
 	}
 
@@ -492,8 +543,14 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		// In case,time not included
+		if (given instanceof LocalDate) {
+			LocalDateTime time = LocalDateTime.of((LocalDate) given, LocalTime.MIN);
+			return time.plus(Duration.ofSeconds(1000000000l));
+		}
+		// if time is included
+		LocalDateTime time = LocalDateTime.from(given);
+		return time.plus(Duration.ofSeconds(1000000000l));
 	}
 
 	/**
@@ -583,9 +640,22 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
+		String s = string.toLowerCase().replace("?", "");
+		s = s.replaceAll("what is ", "");
+		String operator = "";
+		if (s.contains("plus")) {
+			operator = s.replaceAll("plus", "+").replaceAll(" ", "");
+		} else if (s.contains("minus")) {
+			operator = s.replaceAll("minus", "-").replaceAll(" ", "");
+		} else if (s.contains("divided")) {
+			operator = s.replaceAll("divided", "/").replaceAll(" ", "");
+		} else if (s.contains("multiplied")) {
+			operator = s.replaceAll("multiplied", "*").replaceAll(" ", "");
+		}
+		int math = Integer.parseInt(operator);
+//		System.out.println(operator);
 
-		return 0;
+		return math;
 	}
 
 }
