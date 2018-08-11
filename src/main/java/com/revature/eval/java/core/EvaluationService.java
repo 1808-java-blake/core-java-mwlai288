@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -216,16 +217,6 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-
-	/**
-	 * 6. Given a phrase, count the occurrences of each word in that phrase.
-	 * 
-	 * For example for the input "olly olly in come free" olly: 2 in: 1 come: 1
-	 * free: 1
-	 * 
-	 * @param string
-	 * @return
-	 */
 	public Map<String, Integer> wordCount(String string) {
 		Map<String, Integer> words = new HashMap<String, Integer>();
 		string = string.replaceAll(",", " ").replaceAll("\n", "");
@@ -325,10 +316,14 @@ public class EvaluationService {
 		String pigWord = "";
 
 		for (int i = 0; i < s.length(); i++) {
+
 			if (s.charAt(i) == 'a' || s.charAt(i) == 'e' || s.charAt(i) == 'i' || s.charAt(i) == 'o'
 					|| s.charAt(i) == 'u') {
+
 				s = s.substring(i, s.length());
-				s = s + pigWord + "ay";
+				s += pigWord + "ay";
+
+				break;
 			} else {
 				pigWord = s.substring(0, i + 1);
 			}
@@ -352,8 +347,21 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		int c = 0, a, temp;
+		int n = input;
+		temp = n;
+		while (n > 0) {
+			a = n % 10;
+			n = n / 10;
+			c = c + (a * a * a);
+		}
+		if (temp == c) {
+
+			return true;
+		} else {
+
+			return false;
+		}
 	}
 
 	/**
@@ -367,8 +375,15 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		long primeNumbers = l;
+		List<Long> factors = new ArrayList<Long>();
+		for (int i = 2; i <= primeNumbers; i++) {
+			while (primeNumbers % i == 0) {
+				factors.add((long) i);
+				primeNumbers /= i;
+			}
+		}
+		return factors;
 	}
 
 	/**
@@ -398,11 +413,11 @@ public class EvaluationService {
 	 * quick brown fox jumps over the lazy dog.
 	 */
 	static class RotationalCipher {
-		private int key;
+//		private int key;
 
 		public RotationalCipher(int key) {
 			super();
-			this.key = key;
+//			this.key = key;
 		}
 
 		public String rotate(String string) {
@@ -425,8 +440,12 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		for (int primeNumber = 2; primeNumber < i; primeNumber++) {
+			if (i % primeNumber == 0) {
+//				System.out.println(i);
+			}
+		}
+		return i;
 	}
 
 	/**
@@ -519,19 +538,17 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		System.out.println(string);
-		String[] s = string.split("");
-		System.out.println(Arrays.toString(s));
+//		System.out.println(string);
 		String letters = "abcdefghijklmnopqrstuvwxyz";
-		for (int i = 0; i <= s.length; i++) {
-			if (letters.contains(String.valueOf(string.charAt(i)))) {
-				letters.equals(s);
-			} else if (!letters.equalsIgnoreCase(String.valueOf(string.charAt(i))));
-			return true;
-
+//		System.out.println(Character.toString(letters));
+		for (int i = 0; i <= letters.length(); i++) {
+			if (letters.contains(Character.toString(letters.charAt(i)))) {
+				continue;
+			} else {
+				return false;
+			}
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -567,8 +584,20 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		ArrayList<Integer> num = new ArrayList<>();
+		for (int x = 0; x < set.length; x++) {
+			int temp = set[x];
+			while (temp < i) {
+				if (!num.contains(temp))
+					num.add(temp);
+				temp += set[x];
+			}
+		}
+		int f_sum = 0;
+		for (int x = 0; x < num.size(); x++)
+			f_sum += num.get(x);
+
+		return f_sum;
 	}
 
 	/**
@@ -640,21 +669,25 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		String s = string.toLowerCase().replace("?", "");
-		s = s.replaceAll("what is ", "");
-		String operator = "";
-		if (s.contains("plus")) {
-			operator = s.replaceAll("plus", "+").replaceAll(" ", "");
-		} else if (s.contains("minus")) {
-			operator = s.replaceAll("minus", "-").replaceAll(" ", "");
-		} else if (s.contains("divided")) {
-			operator = s.replaceAll("divided", "/").replaceAll(" ", "");
-		} else if (s.contains("multiplied")) {
-			operator = s.replaceAll("multiplied", "*").replaceAll(" ", "");
-		}
-		int math = Integer.parseInt(operator);
+		
+		String[] s = string.substring(8).replaceAll(" by", "").split(" ");
+		System.out.println(Arrays.toString(s));
+		int numOne = Integer.parseInt(s[0]);
+		int numTwo = Integer.parseInt(s[2]);
+//		System.out.println(numOne);
+//		System.out.println(numTwo);
+		String operator = s[1];
 //		System.out.println(operator);
-
+		int math = 0;
+		switch(operator) {
+		case "plus": math = numOne + numTwo;
+		break;
+		case "minus": math = numOne - numTwo;
+		break;
+		case "multiplied": math = numOne * numTwo;
+		break;
+		default: math = numOne / numTwo;
+		}
 		return math;
 	}
 
